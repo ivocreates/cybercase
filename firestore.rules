@@ -24,8 +24,8 @@ service cloud.firestore {
     
     // Teams collection
     match /teams/{teamId} {
-      // Anyone authenticated can read teams (for browsing teams page)
-      allow read: if isAuthenticated();
+      // Anyone can read teams (for browsing teams page and checking team names during signup)
+      allow read: if true;
       
       // Anyone authenticated can create a team (for team leaders during signup)
       allow create: if isAuthenticated() 
