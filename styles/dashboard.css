@@ -378,26 +378,3 @@
         grid-template-columns: 1fr;
     }
 }
-
-/* Top Nav (for non-dashboard pages) */
-.top-nav {
-    background: var(--card-bg);
-    border-bottom: 2px solid var(--border-color);
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.top-nav .nav-brand a {
-    font-family: 'Orbitron', sans-serif;
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.top-nav .nav-brand a:hover {
-    color: var(--accent-color);
-}
