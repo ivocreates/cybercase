@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAdmin() {
+      return exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    function isTeamMember(teamId) {
+      let team = get(/databases/$(database)/documents/teams/$(teamId));
+      let memberUids = team.data.members;
+      return request.auth.uid in memberUids;
+    }
+    
+    // Users collection - users can read all, write only their own data
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth.uid == userId;
+      allow update: if request.auth.uid == userId;
+      allow delete: if request.auth.uid == userId;
+    }
+    
+    // Teams collection
+    match /teams/{teamId} {
+      // Anyone authenticated can read teams
+      allow read: if request.auth != null;
+      
+      // Anyone authenticated can create a team
+      allow create: if request.auth != null;
+      
+      // Team members or admins can update
+      allow update: if request.auth != null;
+      
+      // Only admins can delete
+      allow delete: if isAdmin();
+    }
+    
+    // Game state - all can read, only admins can write
+    match /gameState/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // Announcements - all can read, only admins can write
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // Admins collection - only readable by admin themselves, never writable
+    match /admins/{adminId} {
+      allow read: if request.auth.uid == adminId;
+      allow write: if false; // Must be created manually in Firebase Console
+    }
+  }
+}

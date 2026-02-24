@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Dashboard - CyberCase</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <a href="index.html">🔍 CyberCase Hunt</a>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">📊 Dashboard</a>
+            <a href="leaderboard.html">🏆 Leaderboard</a>
+            <a href="announcements.html">📢 Announcements</a>
+            <button id="logout-btn" class="btn btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="team-info">
+                <h1 id="team-name">Team Name</h1>
+                <p id="user-role" class="role-badge">Team Leader</p>
+            </div>
+            <div class="team-stats">
+                <div class="stat-box">
+                    <span class="stat-value" id="clues-found">0</span>
+                    <span class="stat-label">Clues Found</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="team-rank">-</span>
+                    <span class="stat-label">Rank</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="team-members-section" id="team-members-section">
+            <h3>👥 Team Members</h3>
+            <div id="members-list" class="members-grid"></div>
+        </section>
+
+        <section class="clue-input-section">
+            <h3>🔍 Submit Clues</h3>
+            <p class="instruction-text">Enter the words/clues you've discovered at the crime scene</p>
+            
+            <div class="clues-grid" id="clues-grid">
+                <!-- Clue inputs will be generated dynamically -->
+            </div>
+
+            <div id="submit-message" class="submit-message"></div>
+        </section>
+
+        <section class="clue-status-section">
+            <h3>📋 Current Status</h3>
+            <div id="clue-status-display" class="clue-status-grid">
+                <!-- Status will be displayed here -->
+            </div>
+        </section>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

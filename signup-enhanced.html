@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Signup - CyberCase</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .auth-methods {
+            margin: 30px 0;
+        }
+        .auth-method-btn {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .auth-method-btn:hover {
+            border-color: var(--primary-color);
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .auth-method-btn.google {
+            background: #4285f4;
+            color: white;
+        }
+        .auth-method-btn.google:hover {
+            background: #357ae8;
+        }
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--border-color);
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+        .phone-input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .country-code {
+            width: 80px;
+        }
+        #recaptcha-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .hide { display: none; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <a href="index.html" class="back-btn">← Back</a>
+            <div class="auth-header">
+                <h1 id="signup-title">Join the Hunt</h1>
+                <p id="role-subtitle">Team Leader or Member</p>
+            </div>
+
+            <!-- Quick Auth Buttons -->
+            <div class="auth-methods">
+                <button class="auth-method-btn google" onclick="signUpWithGoogle()">
+                    <span>🌐</span> Continue with Google
+                </button>
+                <button class="auth-method-btn" onclick="togglePhoneAuth()">
+                    <span>📱</span> Continue with Phone
+                </button>
+            </div>
+
+            <div class="divider">OR</div>
+
+            <!-- Email/Password Form -->
+            <form id="email-signup-form" class="auth-form">
+                <div class="form-group">
+                    <label for="role-select">🎭 Role</label>
+                    <select id="role-select" class="form-control" required>
+                        <option value="leader">Team Leader (Create Team)</option>
+                        <option value="member">Team Member (Join Team)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-name">👤 Full Name</label>
+                    <input type="text" id="user-name" class="form-control" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-email">📧 Email Address</label>
+                    <input type="email" id="user-email" class="form-control" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group" id="team-name-group">
+                    <label for="team-name-input">🎯 Team Name</label>
+                    <input type="text" id="team-name-input" class="form-control" placeholder="Enter team name">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-password">🔒 Password</label>
+                    <input type="password" id="user-password" class="form-control" required placeholder="Minimum 6 characters">
+                </div>
+
+                <div id="error-message" class="error-message"></div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span>Create Account</span>
+                </button>
+            </form>
+
+            <!-- Phone Auth Form (Hidden initially) -->
+            <form id="phone-signup-form" class="auth-form hide">
+                <div class="form-group">
+                    <label for="phone-role-select">🎭 Role</label>
+                    <select id="phone-role-select" class="form-control" required>
+                        <option value="leader">Team Leader</option>
+                        <option value="member">Team Member</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone-name">👤 Full Name</label>
+                    <input type="text" id="phone-name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone-number">📱 Phone Number</label>
+                    <div class="phone-input-group">
+                        <input type="text" class="form-control country-code" value="+91" readonly>
+                        <input type="tel" id="phone-number" class="form-control" required placeholder="1234567890">
+                    </div>
+                </div>
+
+                <div class="form-group" id="phone-team-name-group">
+                    <label for="phone-team-name">🎯 Team Name</label>
+                    <input type="text" id="phone-team-name" class="form-control">
+                </div>
+
+                <div id="recaptcha-container"></div>
+
+                <div id="otp-section" class="form-group hide">
+                    <label for="otp-code">🔐 Enter OTP</label>
+                    <input type="text" id="otp-code" class="form-control" placeholder="6-digit code">
+                    <button type="button" class="btn btn-secondary" onclick="verifyOTP()" style="margin-top: 10px; width: 100%;">Verify OTP</button>
+                </div>
+
+                <div id="phone-error-message" class="error-message"></div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="send-otp-btn">
+                    <span>Send OTP</span>
+                </button>
+                
+                <button type="button" class="btn btn-secondary btn-block" onclick="togglePhoneAuth()">
+                    Back to Email Signup
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login-enhanced.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="js/signup-enhanced.js"></script>
+</body>
+</html>

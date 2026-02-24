@@ -1,0 +1,233 @@
+/* Announcements Page Styles */
+
+.announcements-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.announcements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.announcement-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: slideInUp 0.5s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.announcement-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.2);
+}
+
+.announcement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--primary-color);
+}
+
+.announcement-card.hint::before {
+    background: var(--accent-color);
+}
+
+.announcement-card.warning::before {
+    background: var(--warning);
+}
+
+.announcement-card.winner::before {
+    background: linear-gradient(180deg, #FFD700, #FFA500);
+}
+
+.announcement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.announcement-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.announcement-type.hint {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.announcement-type.update {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.announcement-type.warning {
+    background: rgba(255, 165, 0, 0.1);
+    border: 1px solid var(--warning);
+    color: var(--warning);
+}
+
+.announcement-type.winner {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid #FFD700;
+    color: #FFD700;
+}
+
+.announcement-time {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.announcement-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.announcement-message {
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+
+/* Winner Card Special Styling */
+.announcement-card.winner {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 165, 0, 0.05));
+    border-color: #FFD700;
+}
+
+.announcement-card.winner .announcement-title {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* No Content State */
+.no-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.empty-state {
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.empty-state small {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Important Announcement Ping */
+.announcement-card.important {
+    border-color: var(--warning);
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% {
+        border-color: var(--warning);
+        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4);
+    }
+    50% {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 10px rgba(255, 165, 0, 0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .announcements-container {
+        padding: 20px 15px;
+    }
+
+    .announcement-card {
+        padding: 20px;
+    }
+
+    .announcement-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .announcement-title {
+        font-size: 1.2rem;
+    }
+
+    .announcement-message {
+        font-size: 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* New Announcement Badge */
+.new-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--danger);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCase: The Curious Hunt - SPK College</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <a href="index.html">🔍 CyberCase Hunt</a>
+        </div>
+        <div class="nav-links">
+            <a href="leaderboard.html">🏆 Leaderboard</a>
+            <a href="announcements.html">📢 Announcements</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero-section">
+            <div class="crime-tape">⚠️ CRIME SCENE - DO NOT CROSS ⚠️</div>
+            <h1 class="neon-title">CyberCase</h1>
+            <h2 class="subtitle">The Curious Hunt</h2>
+            <p class="event-info">SPK College TechFest Event</p>
+            <div class="fingerprint-icon">🔍</div>
+        </header>
+
+        <section class="intro-section">
+            <div class="case-brief">
+                <h3>🕵️ Mission Brief</h3>
+                <p>A mysterious case awaits! Six crucial pieces of evidence are hidden throughout the campus. 
+                Your team must work together to uncover these clues before time runs out.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Hidden Clues</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Teams</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Winner</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="action-section">
+            <div class="role-selection">
+                <h3>Choose Your Role</h3>
+                <div class="role-cards">
+                    <div class="role-card leader-card">
+                        <div class="role-icon">👨‍💼</div>
+                        <h4>Team Leader</h4>
+                        <p>Create a team and lead your squad to victory</p>
+                        <a href="signup-enhanced.html?role=leader" class="btn btn-primary">Create Team</a>
+                        <a href="login.html?role=leader" class="btn btn-secondary">Login as Leader</a>
+                    </div>
+                    <div class="role-card member-card">
+                        <div class="role-icon">👥</div>
+                        <h4>Team Member</h4>
+                        <p>Join an existing team and help solve the case</p>
+                        <a href="signup-enhanced.html?role=member" class="btn btn-primary">Join Team</a>
+                        <a href="login.html?role=member" class="btn btn-secondary">Login as Member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-links">
+            <a href="leaderboard.html" class="link-btn">
+                <span>🏆</span> View Leaderboard
+            </a>
+            <a href="announcements.html" class="link-btn">
+                <span>📢</span> Announcements & Hints
+            </a>
+            <a href="admin-login.html" class="link-btn admin-link">
+                <span>🔐</span> Admin Access
+            </a>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 SPK College TechFest | CyberCase: The Curious Hunt</p>
+        </footer>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</body>
+</html>

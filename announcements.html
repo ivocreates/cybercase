@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements - CyberCase</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/announcements.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <a href="index.html">🔍 CyberCase Hunt</a>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="leaderboard.html">🏆 Leaderboard</a>
+            <a href="announcements.html" class="active">📢 Announcements</a>
+        </div>
+    </nav>
+
+    <div class="announcements-container">
+        <header class="page-header">
+            <h1>📢 Announcements & Hints</h1>
+            <p>Stay updated with the latest clues and updates</p>
+        </header>
+
+        <div id="announcements-list" class="announcements-list">
+            <!-- Announcements will be displayed here -->
+        </div>
+
+        <div id="no-announcements" class="no-content" style="display: none;">
+            <div class="empty-state">
+                <span class="empty-icon">📭</span>
+                <p>No announcements yet</p>
+                <small>Check back later for hints and updates</small>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="js/announcements.js"></script>
+</body>
+</html>
