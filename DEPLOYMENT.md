@@ -145,7 +145,36 @@ firebase.firestore().collection('admins').doc(adminUid).set({
 });
 ```
 
-### 4. Test Everything
+### 4. Initialize Game State ⚠️ IMPORTANT
+
+**REQUIRED before users can signup!**
+
+Go to: Firestore Database → Add collection
+
+1. Collection ID: `gameState`
+2. Document ID: `current` (type exactly this)
+3. Add fields:
+   - `started` (boolean): `false`
+   - `paused` (boolean): `false`
+   - `ended` (boolean): `false`
+   - `startedAt` (null): leave null
+   - `pausedAt` (null): leave null
+   - `endedAt` (null): leave null
+4. Click Save
+
+**Or run in browser console:**
+```javascript
+firebase.firestore().collection('gameState').doc('current').set({
+  started: false,
+  paused: false,
+  ended: false,
+  startedAt: null,
+  pausedAt: null,
+  endedAt: null
+}).then(() => alert('Game state initialized!'));
+```
+
+### 5. Test Everything
 
 - [ ] Visit your Netlify URL
 - [ ] Admin login works
