@@ -5,7 +5,34 @@ let confirmationResult = null;
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     setupRoleChangeListener();
+    prefillFromURL();
 });
+
+// Pre-fill form from URL parameters
+function prefillFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const role = urlParams.get('role');
+    const team = urlParams.get('team');
+    
+    // Set role if provided
+    if (role) {
+        const roleSelect = document.getElementById('role-select');
+        const phoneRoleSelect = document.getElementById('phone-role-select');
+        if (roleSelect) roleSelect.value = role;
+        if (phoneRoleSelect) phoneRoleSelect.value = role;
+        
+        // Trigger change event to show/hide team name field
+        if (roleSelect) roleSelect.dispatchEvent(new Event('change'));
+    }
+    
+    // Pre-fill team name if provided
+    if (team) {
+        const teamNameInput = document.getElementById('team-name-input');
+        const phoneTeamName = document.getElementById('phone-team-name');
+        if (teamNameInput) teamNameInput.value = decodeURIComponent(team);
+        if (phoneTeamName) phoneTeamName.value = decodeURIComponent(team);
+    }
+}
 
 // Role change listener
 function setupRoleChangeListener() {
