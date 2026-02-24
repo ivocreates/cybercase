@@ -20,6 +20,14 @@
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: 700;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.6), 0 0 30px rgba(0, 255, 136, 0.3);
+    transition: all 0.3s ease;
+}
+
+.dashboard-nav .nav-brand a:hover {
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4);
+    transform: scale(1.05);
 }
 
 .dashboard-nav .nav-links {
@@ -29,23 +37,29 @@
 }
 
 .dashboard-nav .nav-links a {
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: all 0.3s ease;
-    font-weight: 500;
+    font-weight: 600;
     padding: 8px 15px;
     border-radius: 5px;
+    font-size: 1rem;
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
 }
 
 .dashboard-nav .nav-links a:hover {
     color: var(--primary-color);
-    background: rgba(0, 255, 136, 0.1);
+    background: rgba(0, 255, 136, 0.15);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+    transform: translateY(-2px);
 }
 
 .dashboard-nav .nav-links a.active {
     color: var(--primary-color);
-    background: rgba(0, 255, 136, 0.15);
-    border-bottom: 2px solid var(--primary-color);
+    background: rgba(0, 255, 136, 0.2);
+    border-bottom: 3px solid var(--primary-color);
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+    font-weight: 700;
 }
 
 .dashboard-container {
