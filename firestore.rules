@@ -3,50 +3,65 @@ service cloud.firestore {
   match /databases/{database}/documents {
     
     // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
     function isAdmin() {
-      return exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+      return isAuthenticated() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    function isGameStarted() {
+      return get(/databases/$(database)/documents/gameState/current).data.started == true;
     }
     
     // Users collection - users can read all authenticated, write only their own data
     match /users/{userId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null && request.auth.uid == userId;
-      allow update: if request.auth != null && request.auth.uid == userId;
-      allow delete: if request.auth != null && request.auth.uid == userId;
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated() && request.auth.uid == userId;
+      allow delete: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
     }
     
     // Teams collection
     match /teams/{teamId} {
-      // Anyone authenticated can read teams
-      allow read: if request.auth != null;
+      // Anyone authenticated can read teams (for browsing teams page)
+      allow read: if isAuthenticated();
       
-      // Anyone authenticated can create a team
-      allow create: if request.auth != null;
+      // Anyone authenticated can create a team (for team leaders during signup)
+      allow create: if isAuthenticated() 
+        && request.resource.data.leaderId == request.auth.uid;
       
-      // Authenticated users can update (for joining teams, submitting clues)
-      allow update: if request.auth != null;
+      // Team updates allowed for:
+      // 1. Adding members (joining team) - allowed anytime
+      // 2. Submitting clues - only when game is started
+      allow update: if isAuthenticated() && (
+        // Adding members is always allowed
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members'])) ||
+        // Clue submissions only when game is started
+        (isGameStarted() && request.resource.data.diff(resource.data).affectedKeys().hasAny(['clues', 'cluesFound', 'submissions', 'score'])) ||
+        // Admins can update anything
+        isAdmin()
+      );
       
       // Only admins can delete
-      allow delete: if request.auth != null && isAdmin();
+      allow delete: if isAdmin();
     }
     
     // Game state - everyone can read (even before login), only admins can write
     match /gameState/{document} {
       allow read: if true;
-      allow write: if request.auth != null && isAdmin();
+      allow write: if isAdmin();
     }
     
     // Announcements - everyone can read, only admins can write
     match /announcements/{announcementId} {
       allow read: if true;
-      allow create: if request.auth != null && isAdmin();
-      allow update: if request.auth != null && isAdmin();
-      allow delete: if request.auth != null && isAdmin();
+      allow create, update, delete: if isAdmin();
     }
     
     // Admins collection - only readable by admin themselves, never writable
     match /admins/{adminId} {
-      allow read: if request.auth != null && request.auth.uid == adminId;
+      allow read: if isAuthenticated() && request.auth.uid == adminId;
       allow write: if false; // Must be created manually in Firebase Console
     }
   }

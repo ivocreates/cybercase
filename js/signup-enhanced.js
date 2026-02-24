@@ -215,6 +215,12 @@ async function createTeamLeader(email, password, name, teamName) {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
 
+    // Force token refresh to ensure auth state is fully propagated
+    await user.getIdToken(true);
+    
+    // Small delay to ensure Firestore is ready to accept writes
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     await createTeamAndProfile(user, name, teamName, 'leader', email);
     window.location.href = 'dashboard.html';
 }
@@ -228,6 +234,12 @@ async function joinTeamAsMember(email, password, name, teamName) {
 
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
+
+    // Force token refresh to ensure auth state is fully propagated
+    await user.getIdToken(true);
+    
+    // Small delay to ensure Firestore is ready to accept writes
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     await joinExistingTeam(user, name, teamName, 'member', email, teamQuery.docs[0].id);
     window.location.href = 'dashboard.html';
@@ -310,6 +322,10 @@ async function joinExistingTeam(user, name, teamName, role, email, teamId, phone
 
 // Phone auth helpers
 async function createTeamLeaderWithPhone(user, name, teamName, phone) {
+    // Force token refresh to ensure auth state is fully propagated
+    await user.getIdToken(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
     await createTeamAndProfile(user, name, teamName, 'leader', '', phone);
     window.location.href = 'dashboard.html';
 }
@@ -319,12 +335,21 @@ async function joinTeamAsMemberWithPhone(user, name, teamName, phone) {
     if (teamQuery.empty) {
         throw new Error('Team not found');
     }
+    
+    // Force token refresh to ensure auth state is fully propagated
+    await user.getIdToken(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
     await joinExistingTeam(user, name, teamName, 'member', '', teamQuery.docs[0].id, phone);
     window.location.href = 'dashboard.html';
 }
 
 // Google auth helpers
 async function createTeamLeaderWithGoogle(user, teamName) {
+    // Force token refresh to ensure auth state is fully propagated
+    await user.getIdToken(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
     await createTeamAndProfile(user, user.displayName, teamName, 'leader', user.email);
     window.location.href = 'dashboard.html';
 }
@@ -334,6 +359,11 @@ async function joinTeamAsMemberWithGoogle(user, teamName) {
     if (teamQuery.empty) {
         throw new Error('Team not found');
     }
+    
+    // Force token refresh to ensure auth state is fully propagated
+    await user.getIdToken(true);
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
     await joinExistingTeam(user, user.displayName, teamName, 'member', user.email, teamQuery.docs[0].id);
     window.location.href = 'dashboard.html';
 }
