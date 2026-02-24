@@ -3,6 +3,8 @@
 
 A real-time multiplayer treasure hunt web application with Firebase backend. Teams solve clues hidden in physical locations and compete on a live leaderboard.
 
+**🔗 GitHub Repository:** https://github.com/ivocreates/cybercase
+
 ---
 
 ## 📋 Table of Contents
