@@ -26,6 +26,7 @@ A real-time multiplayer treasure hunt web application with Firebase backend. Tea
 ### For Participants
 - **Multi-Method Authentication**: Email/Password, Phone OTP, or Google Sign-in
 - **Team Creation & Joining**: Leaders create teams, members join existing teams
+- **Browse Teams**: View all registered teams with search/filter functionality
 - **Game State Control**: Access blocked until admin starts the game
 - **Real-time Clue Submission**: Submit discovered clues and get instant feedback
 - **Live Leaderboard**: View real-time rankings based on score and time
@@ -59,6 +60,7 @@ techfest/
 ├── index.html                  # Landing page
 ├── signup-enhanced.html        # Multi-method signup (Email/Phone/Google)
 ├── login.html                  # Login page with game state check
+├── teams.html                  # Browse all teams with search
 ├── dashboard.html              # Team dashboard
 ├── leaderboard.html            # Public leaderboard
 ├── announcements.html          # Announcements page
@@ -85,6 +87,7 @@ techfest/
 └── js/
     ├── signup-enhanced.js     # Enhanced multi-auth signup
     ├── login.js               # Login logic with game state
+    ├── teams.js               # Teams browsing and search
     ├── dashboard.js           # Dashboard functionality
     ├── leaderboard.js         # Leaderboard display
     ├── announcements.js       # Announcements display
